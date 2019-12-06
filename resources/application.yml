@@ -1,0 +1,93 @@
+server:
+  port: 9999
+  compression:
+    enabled: true
+spring:
+  http:
+    converters:
+      preferred-json-mapper: jackson
+  datasource:
+         type: com.alibaba.druid.pool.DruidDataSource
+         driverClassName: com.mysql.jdbc.Driver
+         url: jdbc:mysql://localhost:3306/db_traffic_information?useUnicode=true&characterEncoding=UTF-8
+         username: root
+         password: 123456
+         initialSize: 1
+         minIdle: 3
+         maxActive: 20
+         maxWait: 60000
+         filters: stat,wall,slf4j
+         timeBetweenEvictionRunsMillis: 60000
+         minEvictableIdleTimeMillis: 60000
+         validationQuery: SELECT 1 FROM DUAL
+         connectionErrorRetryAttempts: 3
+         notFullTimeoutRetryCount: 3
+         breakAfterAcquireFailure: true
+         testWhileIdle: true
+         testOnBorrow: false
+         testOnReturn: false
+         poolPreparedStatements: false
+         maxPoolPreparedStatementPerConnectionSize: 20
+         connectionProperties: 'druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000'
+
+  aop:
+    proxy-target-class: true
+  velocity:
+    cache: false
+    request-context-attribute: request
+    number-tool-attribute: number
+    date-tool-attribute: date
+  redis:
+    database: 3
+    host: localhost
+    password:
+    timeout: 0
+    pool:
+      max-active: 2
+      max-idle: 2
+      max-wait: -1
+      min-idle: 1
+      port: 6379
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    serialization-inclusion: true
+    mapper: true
+    timeZone: GMT+8
+  session:
+    store-type: redis
+  mvc:
+    throw-exception-if-no-handler-found: false
+  resources:
+    add-mappings: true
+
+mybatis:
+    typeAliasesPackage: zb.smarttra.com.model
+    mapperLocations: classpath:mapper/*.xml
+    configLocation: classpath:conf/mybatis-config.xml
+
+redis:
+  shiro:
+    host: localhost
+    port: 6379
+
+spring.encrypt:
+    key: abcdef0123456789
+    debug: false
+
+
+com:
+  mqtt:
+    url: tcp://190.204.20.26:1883
+    clientId: Server
+    topics: command_pub/#
+    timeout: 10
+    keepalive: 20
+    keepAliveInterval: 10
+
+web.upload-path: D:/image/
+spring.mvc.static-path-pattern: /**
+spring.resources.static-locations: classpath:/META-INF/resources/,classpath:/resources/,\classpath:/static/,classpath:/public/,file:${web.upload-path}
+
+logging:
+      level:
+        com.demo: DEBUG
